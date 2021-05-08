@@ -50,12 +50,13 @@ public class Main {
         int randomWordNumber = random.nextInt(24);
         char[] randomWordToCharArr = words[randomWordNumber].toCharArray();
         do {
-            System.out.println("Какое слово из представленных загадала машина?\napple, orange, lemon, banana, apricot, avocado, broccoli, carrot, cherry, garlic\ngrape, melon, leak, kiwi, mango, mushroom, nut, olive, pea, peanut\npear, pepper, pineapple, pumpkin, potato");
+            System.out.println("Какое слово из представленных загадала машина?\n");
+            showArray(words);
             userAnswer = scanner.next();
             char[] userAnswerToCharArr = userAnswer.toCharArray();
-            int length = randomWordToCharArr.length;
-            if (userAnswerToCharArr.length < randomWordToCharArr.length) length = userAnswerToCharArr.length;
-            for (int i = 0; i < length; i++) {
+            int minLength = randomWordToCharArr.length;
+            if (userAnswerToCharArr.length < randomWordToCharArr.length) minLength = userAnswerToCharArr.length;
+            for (int i = 0; i < minLength; i++) {
                 if (userAnswerToCharArr[i] == randomWordToCharArr[i]) {
                     showCorrectLetters[i] = userAnswerToCharArr[i];
                 }
@@ -65,12 +66,20 @@ public class Main {
             if (userAnswer.equals(words[randomWordNumber])) {
                 System.out.println("Это победа! Загаданное слово: " + words[randomWordNumber]);
             }
-
         } while (!userAnswer.equals(words[randomWordNumber]));
         isQuit(2);
     }
 
-    static void isQuit(int numGame) {
+    static void showArray(String[] arr) {
+        System.out.print(arr[0] + "  ");
+        for (int i = 1; i < arr.length; i++) {
+            System.out.print(arr[i] + "  ");
+            if (i % 5 == 0) System.out.println();
+        }
+        System.out.println();
+    }
+
+    static void isQuit(int numGame) { //Периодически, но очень редко при выборе 0, метод вызывается опять почему-то, не знаю, как поправить баг.
         int userAnswerQ;
         do {
             System.out.println("Повторим? 1 – да / 0 – нет");
@@ -79,7 +88,6 @@ public class Main {
             if (userAnswerQ == 1 && numGame == 1) playGameOne();
             else if (userAnswerQ == 1 && numGame == 2) playGameTwo();
             else if (userAnswerQ == 0) System.out.println("ЧАО!");
-
         } while (userAnswerQ != 0);
     }
 
@@ -90,8 +98,7 @@ public class Main {
             userAnswer = scanner.nextInt();
             if (userAnswer == 1) playGameOne();
             else if (userAnswer == 2) playGameTwo();
-            else if (userAnswer == 0) System.out.println("ЧАО!");
-
+            else if (userAnswer == 0) System.out.println("Ой, все!");
         } while (userAnswer != 0);
     }
 }
